@@ -13,7 +13,7 @@ export const App = () => {
       </header>
 
       <main>
-        <Board />
+        <Board data={data} />
       </main>
     </div>
   );

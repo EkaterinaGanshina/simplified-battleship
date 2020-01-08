@@ -29,6 +29,23 @@
     outline-offset: -2px;
 }
 
+.board-cell.cell--initial::after {
+    content: '\26AA';
+    opacity: 0.5;
+}
+
+.board-cell.cell--miss::after {
+    content: '\1F30A';
+}
+
+.board-cell.cell--hit::after {
+    content: '\1F3AF';
+}
+
+.board-cell.cell--sunk::after {
+    content: '\1F4A5';
+}
+
 @media (min-width: 380px) {
     .board-cell {
         font-size: 18px;
