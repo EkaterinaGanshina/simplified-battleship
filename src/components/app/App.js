@@ -1,6 +1,7 @@
 import React from 'react';
-import { data } from '../../data';
 import './App.css';
+import { data } from '../../data';
+import { Board } from '../playboard/Board';
 
 export const App = () => {
   console.log(data);
@@ -10,6 +11,10 @@ export const App = () => {
       <header className="app-header">
         <h1>Battleship Game</h1>
       </header>
+
+      <main>
+        <Board />
+      </main>
     </div>
   );
 };

@@ -1,0 +1,36 @@
+.board {
+    text-align: center;
+    padding: 10px;
+}
+
+.board-row {
+    font-size: 0;
+}
+
+.board-cell {
+    background-color: #ffffff;
+    color: #777777;
+    border: 1px solid #777777;
+    width: calc(10vw - 1px);
+    height: calc(10vw - 1px);
+    min-width: 28px;
+    min-height: 28px;
+    max-width: 40px;
+    max-height: 40px;
+    font-size: 14px;
+    margin-right: -1px;
+    margin-top: -1px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.board-cell:focus {
+    outline: 1px solid deepskyblue;
+    outline-offset: -2px;
+}
+
+@media (min-width: 380px) {
+    .board-cell {
+        font-size: 18px;
+    }
+}
