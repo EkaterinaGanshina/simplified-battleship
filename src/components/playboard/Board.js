@@ -1,13 +1,7 @@
 import React from 'react';
 import './Board.css';
 import { columnsCount, rowsCount, cellStates } from '../../constants';
-
-const Square = (props) => (
-  <button
-    className={`board-cell ${props.className}`}
-    onClick={props.onClick}
-  />
-);
+import { Square } from '../square/Square';
 
 export class Board extends React.Component {
   state = {
@@ -16,11 +10,7 @@ export class Board extends React.Component {
   };
 
   render() {
-    let board = [];
-
-    for (let i = 0; i < rowsCount; i += 1) {
-      board.push(this.renderRow(i));
-    }
+    const board = this.state.cells.map((item, i) => this.renderRow(i));
 
     return (
       <div className="board">
@@ -30,11 +20,7 @@ export class Board extends React.Component {
   }
 
   renderRow(i) {
-    let row = [];
-
-    for (let j = 0; j < columnsCount; j += 1) {
-      row.push(this.renderSquare(j, i));
-    }
+    let row = this.state.cells[i].map((item, j) => this.renderSquare(j, i));
 
     return (
       <div
@@ -80,19 +66,21 @@ export class Board extends React.Component {
       return;
     }
 
-    this.checkCellState(i, j);
+    this.changeCellState(i, j);
   };
 
-  checkCellState(x, y) {
+  changeCellState(x, y) {
     const { ships } = this.state;
     let cellFound = false;
 
+    // iterate over ships
     for (let i = 0; i < ships.length; i += 1) {
       const { positions } = ships[i];
 
+      // iterate over coordinates of each cell
       for (let j = 0; j < positions.length; j += 1) {
         if (positions[j][0] === x && positions[j][1] === y) {
-          this.updateBoardState(x, y, cellStates.hit);
+          this.updateBoardState(x, y, cellStates.hit, i);
           cellFound = true;
           break;
         }
@@ -106,12 +94,34 @@ export class Board extends React.Component {
     }
   }
 
-  updateBoardState(i, j, value) {
-    let newCells = this.state.cells.slice();
-    newCells[i][j] = value;
+  // TODO: add computer messages below game board
+
+  updateBoardState(i, j, state, shipIndex) {
+    const newShips = [...this.state.ships];
+    let newCells = [...this.state.cells];
+    newCells[i][j] = state;
+
+    if (shipIndex != null) {
+      const currentShip = newShips[shipIndex];
+      currentShip.hitCount += 1;
+
+      // check if this ship should be sunk
+      if (currentShip.hitCount === currentShip.positions.length) {
+        newCells = this.sinkShip(shipIndex, newCells);
+      }
+    }
 
     this.setState({
       cells: newCells,
+      ships: newShips,
     });
+  }
+
+  sinkShip(shipIndex, cells) {
+    this.state.ships[shipIndex].positions.forEach((item) => {
+      cells[item[0]][item[1]] = cellStates.sunk;
+    });
+
+    return cells;
   }
 }
