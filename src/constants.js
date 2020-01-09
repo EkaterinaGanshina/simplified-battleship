@@ -4,18 +4,26 @@ export const columnsCount = 10;
 export const cellStates = {
   initial: {
     value: 0,
-    class: 'cell--initial',
+    cssClass: 'cell--initial',
   },
   miss: {
     value: 1,
-    class: 'cell--miss',
+    cssClass: 'cell--miss',
   },
   hit: {
     value: 2,
-    class: 'cell--hit',
+    cssClass: 'cell--hit',
   },
   sunk: {
     value: 3,
-    class: 'cell--sunk',
+    cssClass: 'cell--sunk',
   },
+};
+
+export const messages = {
+  initial: '',
+  miss: 'You missed...',
+  hit: 'You hit!',
+  sunk: 'Wow, you sunk the ship!',
+  win: 'You won! Congratulations!',
 };
